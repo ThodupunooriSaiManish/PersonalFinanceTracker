@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ url_for('settings') }}">
-                    {{ budget_form.hidden_tag() }}
+                    {{ budget_form.csrf_token() }}
                     <div class="mb-3">
                         <label for="monthly_budget" class="form-label">Monthly Budget Limit ($)</label>
                         <div class="input-group">

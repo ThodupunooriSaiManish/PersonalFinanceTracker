@@ -46,9 +46,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-# Import routes
-from routes import *
-
 # Create database tables
 with app.app_context():
     # Make sure to import the models here or their tables won't be created
@@ -73,3 +70,6 @@ with app.app_context():
         
         db.session.commit()
         logging.debug("Default categories created")
+
+# Import routes (after db initialization to avoid circular imports)
+from routes import *

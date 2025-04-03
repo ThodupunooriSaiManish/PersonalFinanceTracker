@@ -9,8 +9,8 @@
             <h4 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Transaction</h4>
         </div>
         <div class="card-body">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
+            <form method="POST" action="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">
+                {{ form.csrf_token() }}
                 
                 <!-- Transaction Type Selector -->
                 <div class="mb-4 transaction-type-container">
