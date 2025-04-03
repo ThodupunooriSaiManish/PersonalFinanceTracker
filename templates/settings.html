@@ -18,9 +18,9 @@
                 <form method="POST" action="{{ url_for('settings') }}">
                     {{ budget_form.csrf_token() }}
                     <div class="mb-3">
-                        <label for="monthly_budget" class="form-label">Monthly Budget Limit ($)</label>
+                        <label for="monthly_budget" class="form-label">Monthly Budget Limit (₹)</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">₹</span>
                             {{ budget_form.monthly_budget(class="form-control", id="monthly_budget", placeholder="0.00") }}
                         </div>
                         {% if budget_form.monthly_budget.errors %}

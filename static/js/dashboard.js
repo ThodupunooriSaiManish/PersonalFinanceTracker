@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return `${context.dataset.label}: $${context.raw.toFixed(2)}`;
+                                return `${context.dataset.label}: ₹${context.raw.toFixed(2)}`;
                             }
                         }
                     }
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 const value = context.raw.toFixed(2);
                                 const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                                 const percentage = ((context.raw / total) * 100).toFixed(1);
-                                return `${label}: $${value} (${percentage}%)`;
+                                return `${label}: ₹${value} (${percentage}%)`;
                             }
                         }
                     }
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 const value = context.raw.toFixed(2);
                                 const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                                 const percentage = ((context.raw / total) * 100).toFixed(1);
-                                return `${label}: $${value} (${percentage}%)`;
+                                return `${label}: ₹${value} (${percentage}%)`;
                             }
                         }
                     }
