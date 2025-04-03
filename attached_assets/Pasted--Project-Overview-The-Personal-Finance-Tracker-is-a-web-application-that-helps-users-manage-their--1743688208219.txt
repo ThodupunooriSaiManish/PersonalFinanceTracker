@@ -1,0 +1,82 @@
+🔹 Project Overview
+The Personal Finance Tracker is a web application that helps users manage their income and expenses. Users can log transactions, categorize them, and visualize their spending patterns using interactive charts. The application provides a dashboard with monthly and yearly reports, allowing users to track their financial habits.
+
+🔹 Core Features
+🔹 1️⃣ User Authentication
+✅ Signup/Login system (optional but recommended)
+✅ Secure password storage using bcrypt
+✅ User-specific data storage (each user sees only their records)
+
+🔹 2️⃣ Income & Expense Management
+✅ Users can add income and expenses
+✅ Transactions include amount, category, and date
+✅ Option to add a description for each transaction
+
+🔹 3️⃣ Categorization of Transactions
+✅ Users can select categories like:
+
+Income: Salary, Freelance, Business, Investments
+
+Expenses: Rent, Food, Shopping, Travel, Entertainment
+
+🔹 4️⃣ Dashboard & Reports
+✅ Displays a summary of total income & expenses
+✅ Interactive bar charts & pie charts using Chart.js
+✅ Monthly and yearly breakdown of transactions
+
+🔹 5️⃣ Transaction History
+✅ Users can view, edit, and delete transactions
+✅ Filter transactions by category & date range
+
+🔹 6️⃣ Budget Alerts (Optional Feature)
+✅ Users can set a monthly budget limit
+✅ If expenses exceed the limit, the app sends an alert
+
+🔹 Folder Structure
+pgsql
+Copy
+Edit
+PersonalFinanceTracker/
+│── static/ (CSS, JS, images)
+│── templates/ (HTML files)
+│── app.py (Main Flask application)
+│── models.py (Database models)
+│── routes.py (Backend routes)
+│── database.db (SQLite database)
+│── requirements.txt (Dependencies)
+│── README.md (Project Documentation)
+🔹 Step-by-Step Development Plan
+🗓️ Day 1-2: Setup & Authentication
+Set up Flask/Django project structure
+
+Create user authentication (signup/login)
+
+Design basic UI with HTML & CSS
+
+🗓️ Day 3-4: Income & Expense Management
+Create a form to add income/expenses
+
+Store data in SQLite/PostgreSQL
+
+Display transactions in a table
+
+🗓️ Day 5-6: Dashboard & Reports
+Implement Chart.js for visualizations
+
+Add filters (by category, date)
+
+Create monthly/yearly summary
+
+🗓️ Day 7-8: Transaction History & Budget Alerts
+Add edit & delete options for transactions
+
+Implement budget alerts
+
+Improve UI & responsiveness
+
+🗓️ Day 9-10: Final Touches & Deployment
+Code optimization & bug fixes
+
+Write README.md for documentation
+
+Deploy on Render/Heroku/Vercel
