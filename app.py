@@ -1,5 +1,6 @@
 import os
 import logging
+import secrets
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -20,7 +21,16 @@ login_manager = LoginManager()
 
 # Create the app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
+
+# Generate a secure secret key if one is not provided
+if not os.environ.get("SESSION_SECRET"):
+    logging.warning("SESSION_SECRET not set in environment. Using a randomly generated key.")
+generated_key = secrets.token_hex(16)
+app.secret_key = os.environ.get("SESSION_SECRET", generated_key)
+
+# Set the same key for CSRF protection
+app.config['WTF_CSRF_SECRET_KEY'] = app.secret_key
+app.config['WTF_CSRF_ENABLED'] = True
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
