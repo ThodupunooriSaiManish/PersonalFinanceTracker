@@ -176,6 +176,7 @@ def dashboard():
                           expense_categories=expense_categories,
                           expense_amounts=expense_amounts,
                           budget_alert=budget_alert,
+                          current_year=current_year,
                           recent_transactions=recent_transactions)
 
 # Transactions list
