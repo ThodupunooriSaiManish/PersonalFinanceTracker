@@ -83,7 +83,7 @@
                         <div class="progress mb-3" style="height: 25px;">
                             <div class="progress-bar {% if budget_percent > 100 %}bg-danger{% elif budget_percent > 80 %}bg-warning{% else %}bg-success{% endif %}" 
                                 role="progressbar" 
-                                style="width: {{ min(budget_percent, 100) }}%;" 
+                                style="width: {% if budget_percent > 100 %}100{% else %}{{ budget_percent }}{% endif %}%;" 
                                 aria-valuenow="{{ budget_percent }}" 
                                 aria-valuemin="0" 
                                 aria-valuemax="100">
