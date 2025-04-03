@@ -1,0 +1,171 @@
+/* Custom styles for Personal Finance Tracker */
+
+/* Dashboard cards */
+.dashboard-card {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.dashboard-card .card-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.income-card {
+    border-left: 5px solid var(--bs-success);
+}
+
+.expense-card {
+    border-left: 5px solid var(--bs-danger);
+}
+
+.balance-card {
+    border-left: 5px solid var(--bs-info);
+}
+
+/* Chart containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-bottom: 2rem;
+}
+
+/* Transaction table */
+.transaction-table th {
+    font-weight: 600;
+}
+
+.transaction-amount {
+    font-weight: 600;
+}
+
+.transaction-income {
+    color: var(--bs-success);
+}
+
+.transaction-expense {
+    color: var(--bs-danger);
+}
+
+/* Form styling */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Transaction type radio buttons */
+.transaction-type-container {
+    margin-bottom: 1.5rem;
+}
+
+.transaction-type-container .form-check {
+    display: inline-block;
+    margin-right: 1.5rem;
+}
+
+.transaction-type-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Date range toggle */
+.date-range-toggle {
+    margin-bottom: 1rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dashboard-card .card-value {
+        font-size: 1.5rem;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+}
+
+/* Budget alert styling */
+.budget-alert {
+    border-left: 5px solid var(--bs-warning);
+    background-color: rgba(var(--bs-warning-rgb), 0.1);
+}
+
+/* Recent transactions section */
+.recent-transactions {
+    margin-top: 2rem;
+}
+
+.recent-transactions .table td {
+    vertical-align: middle;
+}
+
+/* Footer styling */
+.app-footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Error and flash messages */
+.alert {
+    border-radius: 8px;
+}
+
+/* Login/Register forms */
+.auth-container {
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.auth-container .card {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Landing page styling */
+.landing-hero {
+    padding: 4rem 0;
+    text-align: center;
+    background-color: rgba(var(--bs-dark-rgb), 0.02);
+    border-radius: 10px;
+    margin-bottom: 3rem;
+}
+
+.landing-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.landing-hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.feature-card {
+    height: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--bs-primary);
+}
