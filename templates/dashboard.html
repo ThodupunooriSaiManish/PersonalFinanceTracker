@@ -23,8 +23,8 @@
         <div class="card dashboard-card income-card">
             <div class="card-body">
                 <h5 class="card-title">Monthly Income</h5>
-                <p class="card-value text-success">${{ month_income|round(2) }}</p>
-                <p class="card-text text-muted">Yearly: ${{ year_income|round(2) }}</p>
+                <p class="card-value text-success">₹{{ month_income|round(2) }}</p>
+                <p class="card-text text-muted">Yearly: ₹{{ year_income|round(2) }}</p>
             </div>
         </div>
     </div>
@@ -32,8 +32,8 @@
         <div class="card dashboard-card expense-card">
             <div class="card-body">
                 <h5 class="card-title">Monthly Expenses</h5>
-                <p class="card-value text-danger">${{ month_expenses|round(2) }}</p>
-                <p class="card-text text-muted">Yearly: ${{ year_expenses|round(2) }}</p>
+                <p class="card-value text-danger">₹{{ month_expenses|round(2) }}</p>
+                <p class="card-text text-muted">Yearly: ₹{{ year_expenses|round(2) }}</p>
             </div>
         </div>
     </div>

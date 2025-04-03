@@ -152,7 +152,7 @@ def dashboard():
     # Budget alert
     budget_alert = None
     if current_user.monthly_budget > 0 and month_expenses > current_user.monthly_budget:
-        budget_alert = f"Warning: You've exceeded your monthly budget of ${current_user.monthly_budget:.2f} by ${(month_expenses - current_user.monthly_budget):.2f}"
+        budget_alert = f"Warning: You've exceeded your monthly budget of ₹{current_user.monthly_budget:.2f} by ₹{(month_expenses - current_user.monthly_budget):.2f}"
     
     # Recent transactions (last 5)
     recent_transactions = Transaction.query.filter_by(
@@ -295,6 +295,9 @@ def edit_transaction(transaction_id):
 @app.route('/transactions/delete/<int:transaction_id>', methods=['POST'])
 @login_required
 def delete_transaction(transaction_id):
+    # Create a form instance for CSRF validation
+    form = FilterTransactionsForm()
+    
     transaction = Transaction.query.get_or_404(transaction_id)
     
     # Ensure the transaction belongs to the current user
