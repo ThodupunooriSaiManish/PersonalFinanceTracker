@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Personal Finance Tracker{% endblock %}
+
+{% block content %}
+<!-- Budget Alert if applicable -->
+{% if budget_alert %}
+<div id="budgetAlert" class="alert budget-alert alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <strong>Budget Alert!</strong> {{ budget_alert }}
+    <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-chart-line me-2"></i>Financial Dashboard</h1>
+    <h4><i class="fas fa-calendar-alt me-2"></i>{{ month_name }} Summary</h4>
+</div>
+
+<!-- Summary Cards Row -->
+<div class="row mb-4">
+    <div class="col-lg-4 mb-4 mb-lg-0">
+        <div class="card dashboard-card income-card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Income</h5>
+                <p class="card-value text-success">₹{{ month_income|round(2) }}</p>
+                <p class="card-text text-muted">Yearly: ₹{{ year_income|round(2) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4 mb-lg-0">
+        <div class="card dashboard-card expense-card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Expenses</h5>
+                <p class="card-value text-danger">₹{{ month_expenses|round(2) }}</p>
+                <p class="card-text text-muted">Yearly: ₹{{ year_expenses|round(2) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card dashboard-card balance-card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Balance</h5>
+                <p class="card-value {% if month_balance >= 0 %}text-info{% else %}text-danger{% endif %}">
+                    ₹{{ month_balance|round(2) }}
+                </p>
+                <p class="card-text text-muted">Yearly: ₹{{ year_balance|round(2) }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row mb-4">
+    <div class="col-lg-8 mb-4 mb-lg-0">
+        <!-- Monthly Comparison Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Income vs. Expenses ({{ current_year|default('2023') }})</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="monthlyBarChart" 
+                            data-months="{{ months_labels|tojson }}" 
+                            data-income="{{ income_data|tojson }}" 
+                            data-expenses="{{ expense_data|tojson }}">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <!-- Monthly Budget Progress -->
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bullseye me-2"></i>Monthly Budget</h5>
+            </div>
+            <div class="card-body d-flex flex-column">
+                {% if current_user.monthly_budget > 0 %}
+                    <div class="flex-grow-1 d-flex flex-column justify-content-center">
+                        <h6 class="text-center mb-3">Budget: ₹{{ current_user.monthly_budget|round(2) }}</h6>
+                        {% set budget_percent = (month_expenses / current_user.monthly_budget * 100)|round %}
+                        <div class="progress mb-3" style="height: 25px;">
+                            <div class="progress-bar {% if budget_percent > 100 %}bg-danger{% elif budget_percent > 80 %}bg-warning{% else %}bg-success{% endif %}" 
+                                role="progressbar" 
+                                style="width: {% if budget_percent > 100 %}100{% else %}{{ budget_percent }}{% endif %}%;" 
+                                aria-valuenow="{{ budget_percent }}" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                {{ budget_percent }}%
+                            </div>
+                        </div>
+                        <p class="text-center mb-0">
+                            {% if budget_percent > 100 %}
+                                <span class="text-danger"><i class="fas fa-exclamation-circle me-1"></i>You've exceeded your budget!</span>
+                            {% elif budget_percent > 80 %}
+                                <span class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>You're approaching your budget limit.</span>
+                            {% else %}
+                                <span class="text-success"><i class="fas fa-check-circle me-1"></i>You're within your budget.</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% else %}
+                    <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+                        <p class="text-center text-muted mb-3">No monthly budget set.</p>
+                        <a href="{{ url_for('settings') }}" class="btn btn-primary">Set Budget</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pie Charts Row -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-4 mb-md-0">
+        <!-- Income by Category -->
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Income by Category</h5>
+            </div>
+            <div class="card-body">
+                {% if income_categories|length > 0 %}
+                    <div class="chart-container">
+                        <canvas id="incomePieChart" 
+                                data-categories="{{ income_categories|tojson }}" 
+                                data-amounts="{{ income_amounts|tojson }}">
+                        </canvas>
+                    </div>
+                {% else %}
+                    <div class="text-center text-muted my-5">
+                        <i class="fas fa-info-circle fa-3x mb-3"></i>
+                        <p>No income data available for this month.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Expenses by Category -->
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Expenses by Category</h5>
+            </div>
+            <div class="card-body">
+                {% if expense_categories|length > 0 %}
+                    <div class="chart-container">
+                        <canvas id="expensePieChart" 
+                                data-categories="{{ expense_categories|tojson }}" 
+                                data-amounts="{{ expense_amounts|tojson }}">
+                        </canvas>
+                    </div>
+                {% else %}
+                    <div class="text-center text-muted my-5">
+                        <i class="fas fa-info-circle fa-3x mb-3"></i>
+                        <p>No expense data available for this month.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="card recent-transactions">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-history me-2"></i>Recent Transactions</h5>
+        <a href="{{ url_for('transactions') }}" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="card-body">
+        {% if recent_transactions %}
+            <div class="table-responsive">
+                <table class="table table-hover transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th class="text-end">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in recent_transactions %}
+                            <tr>
+                                <td>{{ transaction.date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ transaction.category.name }}</td>
+                                <td>{{ transaction.description or '-' }}</td>
+                                <td class="text-end transaction-amount {% if transaction.is_income %}transaction-income{% else %}transaction-expense{% endif %}">
+                                    {% if transaction.is_income %}+{% else %}-{% endif %}₹{{ transaction.amount|round(2) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center text-muted my-4">
+                <i class="fas fa-receipt fa-3x mb-3"></i>
+                <p>No transactions yet. Add your first transaction to get started!</p>
+                <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">Add Transaction</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
