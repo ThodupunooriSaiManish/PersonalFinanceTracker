@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions - Personal Finance Tracker{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-list me-2"></i>Transactions</h1>
+    <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">
+        <i class="fas fa-plus-circle me-1"></i>Add Transaction
+    </a>
+</div>
+
+<!-- Filter Form -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filter Transactions</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('transactions') }}">
+            {{ form.csrf_token() }}
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" for="category_id">Category</label>
+                    {{ form.category_id(class="form-select") }}
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check date-range-toggle">
+                        <input class="form-check-input" type="checkbox" id="dateRangeToggle">
+                        <label class="form-check-label" for="dateRangeToggle">
+                            Filter by date range
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    {{ form.submit(class="btn btn-primary w-100") }}
+                </div>
+            </div>
+            
+            <div id="dateRangeFields" class="row g-3 mt-1" style="display: none;">
+                <div class="col-md-6">
+                    <label class="form-label" for="start_date">From Date</label>
+                    {{ form.start_date(class="form-control", type="date") }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="end_date">To Date</label>
+                    {{ form.end_date(class="form-control", type="date") }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-table me-2"></i>Transaction History</h5>
+    </div>
+    <div class="card-body">
+        {% if transactions %}
+            <div class="table-responsive">
+                <table class="table table-hover transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th class="text-end">Amount</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ transaction.category.name }}</td>
+                                <td>{{ transaction.description or '-' }}</td>
+                                <td class="text-end transaction-amount {% if transaction.is_income %}transaction-income{% else %}transaction-expense{% endif %}">
+                                    {% if transaction.is_income %}+{% else %}-{% endif %}₹{{ transaction.amount|round(2) }}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}" class="btn btn-sm btn-outline-secondary me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ url_for('delete_transaction', transaction_id=transaction.id) }}" method="POST" class="d-inline">
+                                        {{ form.csrf_token() }}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-transaction">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center text-muted my-5">
+                <i class="fas fa-receipt fa-3x mb-3"></i>
+                <p>No transactions found. Add your first transaction to get started!</p>
+                <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">Add Transaction</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
+{% endblock %}
