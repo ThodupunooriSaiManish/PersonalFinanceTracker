@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Personal Finance Tracker{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-cog me-2"></i>Settings</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <!-- Budget Settings -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bullseye me-2"></i>Budget Settings</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('settings') }}">
+                    {{ budget_form.csrf_token() }}
+                    <div class="mb-3">
+                        <label for="monthly_budget" class="form-label">Monthly Budget Limit (₹)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">₹</span>
+                            {{ budget_form.monthly_budget(class="form-control", id="monthly_budget", placeholder="0.00") }}
+                        </div>
+                        {% if budget_form.monthly_budget.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in budget_form.monthly_budget.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Set to 0 to disable budget alerts.</div>
+                    </div>
+                    <div class="d-grid">
+                        {{ budget_form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <!-- Account Information -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-user me-2"></i>Account Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" value="{{ current_user.username }}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="{{ current_user.email }}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Account Created</label>
+                    <input type="text" class="form-control" value="{{ current_user.created_at.strftime('%Y-%m-%d') }}" disabled>
+                </div>
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle me-2"></i> To change your account information or password, please contact support.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
