@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Personal Finance Tracker - Take Control of Your Finances{% endblock %}
+
+{% block content %}
+<div class="landing-hero">
+    <h1>Take Control of Your Financial Future</h1>
+    <p class="lead">Track your income and expenses, visualize your spending patterns, and make informed financial decisions with our Personal Finance Tracker.</p>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg">Login</a>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3 class="card-title">Track Transactions</h3>
+                <p class="card-text">Easily log your income and expenses with detailed categorization to keep track of where your money is going.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3 class="card-title">Visualize Data</h3>
+                <p class="card-text">See your financial data come to life with interactive charts and graphs that help you understand your spending habits.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3 class="card-title">Budget Alerts</h3>
+                <p class="card-text">Set up budget limits and receive alerts when you're approaching or exceeding your monthly spending goals.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-center mb-5">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <h2>Why use Personal Finance Tracker?</h2>
+        <p>Taking control of your finances starts with understanding where your money comes from and where it goes. Our intuitive finance tracker helps you:</p>
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><i class="fas fa-check-circle me-2 text-success"></i> Log income and expenses with detailed categorization</li>
+            <li class="list-group-item"><i class="fas fa-check-circle me-2 text-success"></i> View your spending patterns with interactive charts</li>
+            <li class="list-group-item"><i class="fas fa-check-circle me-2 text-success"></i> Set budget limits and receive alerts</li>
+            <li class="list-group-item"><i class="fas fa-check-circle me-2 text-success"></i> Generate monthly and yearly reports</li>
+            <li class="list-group-item"><i class="fas fa-check-circle me-2 text-success"></i> Make informed financial decisions</li>
+        </ul>
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Start your financial journey today</a>
+    </div>
+    <div class="col-lg-6">
+        <div class="card bg-secondary border-0">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Features at a glance</h4>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary p-2 rounded-circle me-3">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">Secure User Accounts</h5>
+                        <p class="mb-0 text-muted">Your financial data is private and secure</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-success p-2 rounded-circle me-3">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">Smart Categorization</h5>
+                        <p class="mb-0 text-muted">Organize transactions by category</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-info p-2 rounded-circle me-3">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">Insightful Reports</h5>
+                        <p class="mb-0 text-muted">Get monthly and yearly breakdowns</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning p-2 rounded-circle me-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">Easy Transaction Search</h5>
+                        <p class="mb-0 text-muted">Find any transaction with powerful filters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
